@@ -87,4 +87,15 @@ internal class User
             field = value.Trim();
         }
     }
+
+    public User(string name, string lastName, DateOnly birthDate,
+                string username, string password, string email)
+    {
+        Name = name;
+        LastName = lastName;
+        BirthDate = birthDate;
+        Username = username;
+        Password = password;
+        Email = email;
+    }
 }
