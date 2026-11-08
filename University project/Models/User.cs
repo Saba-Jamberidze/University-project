@@ -63,18 +63,7 @@ internal class User
             field = value.Trim();
         }
     }
-    public string Password
-    {
-        get;
-        set
-        {
-            if (value.Length < 6 || string.IsNullOrWhiteSpace(value))
-            {
-                throw new ArgumentException("Password cannot be null, empty, or less than 6 characters.");
-            }
-            field = value.Trim();
-        }
-    }
+    public string PasswordHash { get; set; }
     public string Email
     {
         get;
