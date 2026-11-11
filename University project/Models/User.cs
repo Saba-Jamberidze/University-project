@@ -49,7 +49,6 @@ internal class User
             return age;
         }
     }
-    public bool Guest { get; set; } = false;
 
     public string Username
     {
@@ -82,14 +81,14 @@ internal class User
                 string lastName,
                 DateOnly birthDate,
                 string username,
-                string password,
+                string passwordHash,
                 string email)
     {
         Name = name;
         LastName = lastName;
         BirthDate = birthDate;
         Username = username;
-        Password = password;
+        PasswordHash = passwordHash;
         Email = email;
     }
 }

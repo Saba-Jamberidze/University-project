@@ -1,15 +1,16 @@
 ﻿namespace University_project.Models;
 
+/// <summary>კურსი (ჯგუფი) თარიღებით, ლექტორით და გაკვეთილების განრიგით.</summary>
 internal class Course
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public int DurationMonths { get; set; }
+    //Id|Name|Description|DurationMonths|StartDate|TeacherId
 
-    public static readonly List<Course> Available = new()
-    {
-        new Course { Name = "C# Basics", Description = "შესავალი C#-ში",   DurationMonths = 3 },
-        new Course { Name = "ASP.NET",   Description = "ვებ აპლიკაციები",  DurationMonths = 4 },
-        new Course { Name = "SQL",       Description = "მონაცემთა ბაზები", DurationMonths = 2 },
-    };
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public int DurationMonths { get; set; }
+    public DateOnly StartDate { get; set; }
+    public Guid TeacherId { get; set; }
+
+    public bool IsActive { get; set; }
 }
