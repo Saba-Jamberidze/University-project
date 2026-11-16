@@ -15,7 +15,7 @@ internal class CourseService
     public void Enroll(Guid studentId, Guid courseId)
     {
         if (!enrollments.Any(e => e.StudentId == studentId && e.CourseId == courseId))
-            enrollments.Add(new Enrollment(studentId, courseId));
+            enrollments.Add(new Enrollment(courseId, studentId));
     }
 
     /// <summary>მოსწავლის აქტიური კურსები.</summary>

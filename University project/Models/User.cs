@@ -1,8 +1,12 @@
 ﻿namespace University_project.Models;
 
+/// <summary>საბაზო მომხმარებელი (მოსწავლისა და ლექტორის საერთო მონაცემები).</summary>
 internal class User
 {
     public Guid Id { get; init; } = Guid.NewGuid();
+
+    /// <summary>მომხმარებლის როლი (გადაფარავენ შთამომავალი კლასები).</summary>
+    public virtual string Role => "user";
     public string Name
     {
         get;
@@ -45,7 +49,11 @@ internal class User
         get
         {
             var today = DateOnly.FromDateTime(DateTime.Now);
-            var age = today.Year - BirthDate.Year;
+            int age = today.Year - BirthDate.Year;
+            if (BirthDate > today.AddYears(-age))
+            {
+                age--; // დაბადების დღე ამ წელს ჯერ არ დამდგარა
+            }
             return age;
         }
     }

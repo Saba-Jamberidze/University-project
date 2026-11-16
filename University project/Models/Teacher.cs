@@ -1,13 +1,13 @@
 ﻿namespace University_project.Models;
 
+/// <summary>ლექტორი. კურსები მას Course.TeacherId-ით უკავშირდება.</summary>
 internal class Teacher : User
 {
-    public string Role { get; init; } = "teacher";
+    /// <summary>მომხმარებლის როლი.</summary>
+    public override string Role => "teacher";
 
-    public string Specialization { get; set; }
-
-
-
+    /// <summary>სპეციალიზაცია (მაგ. "C#", "Web", "Python").</summary>
+    public string Specialization { get; set; } = string.Empty;
 
     public Teacher(string name,
                    string lastName,
@@ -17,13 +17,5 @@ internal class Teacher : User
                    string email)
         : base(name, lastName, birthDate, username, passwordHash, email)
     {
-        Name = name;
-        LastName = lastName;
-        BirthDate = birthDate;
-        Username = username;
-        PasswordHash = passwordHash;
-        Email = email;
     }
-
-
 }

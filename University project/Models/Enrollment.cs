@@ -1,5 +1,6 @@
 ﻿namespace University_project.Models;
 
+/// <summary>მოსწავლის ჩარიცხვა კურსზე (მოსწავლე-კურსის კავშირი).</summary>
 internal class Enrollment
 {
     public Guid CourseId { get; set; }
