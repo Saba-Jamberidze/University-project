@@ -1,6 +1,6 @@
 ﻿namespace University_project.Models;
 
-/// <summary>კურსი (ჯგუფი) თარიღებითა და ლექტორით.</summary>.
+/// <summary>კურსი (ჯგუფი) თარიღებითა და ლექტორით.</summary>
 internal class Course
 {
     //Id|Name|Description|DurationMonths|StartDate|TeacherId

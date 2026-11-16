@@ -1,11 +1,30 @@
 ﻿namespace University_project.Models;
 
-internal class Assignment(Guid CourseId, string Title, string Description, DateOnly DueDate)
+/// <summary>დავალება, რომელსაც ლექტორი აძლევს კურსის მოსწავლეებს.</summary>
+internal class Assignment
 {
-    //Id, CourseId, Title, Description, DueDate
-    public Guid Id { get; set; } = new Guid();
-    public Guid CourseId { get; set; } = CourseId;
-    public string Title { get; set; } = Title;
-    public string Description { get; set; } = Description;
-    public DateOnly DueDate { get; set; } = DueDate;
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public Guid CourseId { get; set; }
+    public string Title
+    {
+        get;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("Title cannot be null or empty.");
+            }
+            field = value.Trim();
+        }
+    }
+    public string Description { get; set; }
+    public DateOnly DueDate { get; set; }
+
+    public Assignment(Guid courseId, string title, string description, DateOnly dueDate)
+    {
+        CourseId = courseId;
+        Title = title;
+        Description = description;
+        DueDate = dueDate;
+    }
 }
