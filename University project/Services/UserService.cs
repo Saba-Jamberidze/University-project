@@ -46,18 +46,16 @@ internal class UserService
         string username,
         string password,
         string email,
-        int rollNumber,
         char grade)
     {
         if (!IsPasswordValid(password) ||
-            IsUsernameTaken(username) ||
-            GetStudentByRollNumber(rollNumber) is not null)
+            IsUsernameTaken(username))
         {
             return false;
         }
 
         users.Add(new Student(name, lastName, birthDate, username,
-                              Hash(password), email, rollNumber, grade));
+                              Hash(password), email, grade));
         return true;
     }
 
@@ -84,13 +82,13 @@ internal class UserService
     }
 
     /// <summary>ამოწმებს მომხმარებლის სახელსა და პაროლს. აბრუნებს მომხმარებელს (ნებისმიერი როლის) ან null-ს.</summary>
-    public User? Login(string username, string password)
+    public User Login(string username, string password)
     {
         string hash = Hash(password);
 
         return users.FirstOrDefault(u =>
             string.Equals(u.Username, username.Trim(), StringComparison.OrdinalIgnoreCase) &&
-            u.PasswordHash == hash);
+            u.PasswordHash == hash) ?? throw new InvalidOperationException("User not found or password is incorrect.");
     }
 
     /// <summary>აბრუნებს მომხმარებელს Id-ით ან null-ს.</summary>
@@ -106,16 +104,16 @@ internal class UserService
     public IEnumerable<Teacher> GetTeachers() => users.OfType<Teacher>();
 
     /// <summary>პოულობს მოსწავლეს სიის ნომრით.</summary>
-    public Student? GetStudentByRollNumber(int rollNumber) =>
-        users.OfType<Student>().FirstOrDefault(s => s.RollNumber == rollNumber);
+    public Student? GetStudentById(Guid id) =>
+        users.OfType<Student>().FirstOrDefault(s => s.Id == id);
 
     /// <summary>
     /// ანახლებს მოსწავლის შეფასებას სიის ნომრით. აბრუნებს false-ს, თუ მოსწავლე ვერ მოიძებნა.
     /// არასწორი ასოს შემთხვევაში Student.Grade ArgumentException-ს აგდებს.
     /// </summary>
-    public bool UpdateGrade(int rollNumber, char grade)
+    public bool UpdateGrade(Guid id, char grade)
     {
-        Student? student = GetStudentByRollNumber(rollNumber);
+        Student? student = GetStudentById(id);
         if (student is null)
         {
             return false;
