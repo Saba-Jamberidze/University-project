@@ -2,39 +2,45 @@
 
 namespace University_project.Services;
 
+/// <summary>მიმდინარე სესია: ვინ არის ამჟამად სისტემაში შესული.</summary>
 internal class SessionService
 {
-    private Student? currentStudent = null;
-    //TODO: Teacher Sesion
-    private readonly UserService userService = new UserService();
+    private readonly UserService userService;
 
-
-    public bool IsCurrentStudent
+    /// <summary>იღებს საერთო UserService-ს, რომ მონაცემები ერთ ადგილას იყოს.</summary>
+    public SessionService(UserService userService)
     {
-        get
-        {
-            return currentStudent is not null;
-        }
+        this.userService = userService;
     }
 
-    public bool LoginStudent(string userName, string password)
+    /// <summary>შესული მომხმარებელი (null, თუ არავინ არის შესული).</summary>
+    public User? CurrentUser { get; private set; }
+
+    public bool IsLoggedIn => CurrentUser is not null;
+    public bool IsAdmin => CurrentUser is Admin;
+    public bool IsTeacher => CurrentUser is Teacher;
+    public bool IsStudent => CurrentUser is Student;
+
+    /// <summary>შედის სისტემაში. აბრუნებს true-ს, თუ სახელი და პაროლი სწორია.</summary>
+    public bool Login(string username, string password)
     {
-        if (currentStudent is not null)
+        if (CurrentUser is not null)
         {
-            throw new InvalidOperationException("A student is already logged in."); // ToDo: add special exception
+            throw new InvalidOperationException("A user is already logged in.");
         }
 
-        currentStudent = userService.GetStudent(userName, password);
-
-        return currentStudent is null ? false : true;
+        CurrentUser = userService.Login(username, password);
+        return CurrentUser is not null;
     }
 
-    public void LogoutStudent()
+    /// <summary>გამოდის სისტემიდან.</summary>
+    public void Logout()
     {
-        if (currentStudent is null)
+        if (CurrentUser is null)
         {
-            throw new InvalidOperationException("No student is currently logged in."); // ToDo: add special exception
+            throw new InvalidOperationException("No user is currently logged in.");
         }
-        currentStudent = null;
+    
+        CurrentUser = null;
     }
-}
+}   
