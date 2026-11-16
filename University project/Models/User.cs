@@ -99,4 +99,6 @@ internal class User
         PasswordHash = passwordHash;
         Email = email;
     }
+
+    public virtual string GetInfo() => $"{Name} {LastName} ({Role})";
 }

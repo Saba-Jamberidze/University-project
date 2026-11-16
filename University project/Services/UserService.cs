@@ -15,19 +15,22 @@ internal class UserService
     }
 
     public bool RegisterStudent(
-        string name,
-        string lastName,
-        DateOnly birthDate,
-        string username,
-        string password,
-        string email)
+    string name,
+    string lastName,
+    DateOnly birthDate,
+    string username,
+    string password,
+    string email,
+    int rollNumber,
+    char grade)
     {
-        if (students.Any(u => u.Username == username))
+        if (students.Any(u => u.Username == username || u.RollNumber == rollNumber))
         {
             return false;
         }
 
-        Student student = new Student(name, lastName, birthDate, username, Hash(password), email);
+        Student student = new Student(name, lastName, birthDate, username,
+                                      Hash(password), email, rollNumber, grade);
         students.Add(student);
 
         return true;

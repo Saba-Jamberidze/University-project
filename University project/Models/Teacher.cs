@@ -18,4 +18,8 @@ internal class Teacher : User
         : base(name, lastName, birthDate, username, passwordHash, email)
     {
     }
+
+    /// <summary>ლექტორის მოკლე აღწერა (პოლიმორფიზმი).</summary>
+    public override string GetInfo() =>
+        $"{Name} {LastName}, ლექტორი ({Specialization})";
 }
